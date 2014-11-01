@@ -1,0 +1,10 @@
+{
+  "name": "client",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Tyre88/positivaklubben",
+  "authors": [
+    "Tyre <victor@webbdudes.se>"
+  ],
+  "license": "MIT",
+  "private": true
+}
