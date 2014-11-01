@@ -1,29 +1,53 @@
 var app = angular.module('positivaklubben', ['ng']);
 
-app.controller('home', ['$scope', '$http', function($scope, $http)
+app.controller('Home', ['$scope', 'TaskService', function($scope, TaskService)
 {
 	$scope.Tasks = [];
 
-	var task = {
-		name: "Tapetsera",
-		description: "Tapetsera övanvåningen",
-		createdby: "Anton Winblad",
-		due: "2014-11-12",
-		starttime: "09:00",
-		endtime: "20:00",
-		comments: [{
-					   content: "AWSOME, jag kommer!",
-					   createdby: "Victor Öhrström"
-				   }]
+	$scope.Task = angular.copy(TaskService.Task);
+
+	$scope.Save = function()
+	{
+		$scope.Task.createdby = "Victor Öhrström";
+
+		TaskService.Save($scope.Task).success(function()
+		{
+			$scope.Tasks.push($scope.Task);
+
+			$scope.Task = angular.copy(TaskService.Task);
+		});
 	};
 
-	//$http.post('http://localhost:8000/task', task).success(function(data)
-	//{
-	//	alert('done');
-	//});
-
-	$http.get('http://localhost:8000/tasks').success(function(data)
+	TaskService.GetAll().success(function(data)
 	{
 		$scope.Tasks = data;
 	});
+}]);
+
+app.service('TaskService', ["$http", function($http)
+{
+	this.Task = {
+		name: "",
+		description: "",
+		createdby: "",
+		due: "",
+		starttime: "",
+		endtime: "",
+		comments: []
+	};
+
+	this.TaskComment = {
+		content: "",
+		createdby: ""
+	};
+
+	this.GetAll = function()
+	{
+		return $http.get('http://localhost:8000/tasks');
+	};
+
+	this.Save = function(task)
+	{
+		return $http.post('http://localhost:8000/task', task);
+	};
 }]);

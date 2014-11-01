@@ -6,11 +6,21 @@
     <title>Positiva klubben</title>
 </head>
 <body>
-    <div ng-controller="home">
+    <div ng-controller="Home">
         <div ng-repeat="task in Tasks">
             <p>{{task.name}}</p>
             <p>{{task.description}}</p>
         </div>
+
+        <fieldset>
+            <legend>New task</legend>
+            <span>Name: </span> <input type="text" ng-model="Task.name" /> <br />
+            <span>Description: </span> <input type="text" ng-model="Task.description" /> <br />
+            <span>Due: </span> <input type="date" ng-model="Task.due" /> <br />
+            <span>Start time: </span> <input type="time" ng-model="Task.starttime" /> <br />
+            <span>End time: </span> <input type="time" ng-model="Task.endtime" /> <br />
+            <button ng-click="Save()">Save</button>
+        </fieldset>
     </div>
 </body>
 <script src="bower_components/angular/angular.min.js"></script>
