@@ -8,6 +8,8 @@ app.use(express.json());
 
 app.post('/task', tasks.save);
 
+app.post('/tasksignup', tasks.signup);
+
 app.get('/tasks', tasks.get);
 
 app.listen(8000, function()

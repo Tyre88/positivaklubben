@@ -9,13 +9,14 @@ exports.get = function(req, res)
 	{
 		if(err)
 		{
-			return res.json(503, {
+			return res.json(503,
+			{
 				error: true
 			});
 		}
 
 		res.json(200, data);
-	})
+	});
 };
 
 exports.save = function(req, res)
@@ -26,9 +27,26 @@ exports.save = function(req, res)
 	{
 		if(err)
 		{
-			return res.json(503, {
+			return res.json(503,
+			{
 				error: true
 			});
 		}
-	})
+	});
+};
+
+exports.signup = function(req, res)
+{
+	var taskSignup = _.clone(req.body);
+
+	taskModel.signup(taskSignup, function(err)
+	{
+		if(err)
+		{
+			return res.json(503,
+				{
+					error: true
+				});
+		}
+	});
 };

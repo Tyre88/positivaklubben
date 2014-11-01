@@ -12,7 +12,7 @@ exports.getAll = function(callback)
 		}
 
 		callback(null, data.map(JSON.parse));
-	})
+	});
 };
 
 exports.save = function(task, callback)
@@ -28,5 +28,21 @@ exports.save = function(task, callback)
 		{
 			return callback(err, null);
 		}
-	})
+	});
+};
+
+exports.signup = function(taskSignup, callback)
+{
+	if(!taskSignup)
+	{
+		return callback(null, null);
+	}
+
+	redis.lpush('taskSignups', JSON.stringify(taskSignup), function(err)
+	{
+		if(err)
+		{
+			return callback(err, null);
+		}
+	});
 };
