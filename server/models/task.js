@@ -12,10 +12,19 @@ var taskSchema = mongoose.Schema({
 	endtime: String
 });
 
-var Task = mongoose.model('task', taskSchema);
+var Task = mongoose.model('tasks', taskSchema);
 
 exports.getAll = function(callback)
 {
+    Task.find({}, function(err, tasks)
+    {
+        if(err)
+        {
+            return callback(err, null);
+        }
+
+        callback(null, tasks);
+    });
 };
 
 exports.get = function(id, callback)
