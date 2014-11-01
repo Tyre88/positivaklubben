@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://192.168.0.36/test');
+mongoose.connect('mongodb://192.168.0.36/positivaklubben');
 
 var db = mongoose.connection;
 
