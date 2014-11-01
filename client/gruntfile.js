@@ -7,18 +7,19 @@ module.exports = function (grunt)
 
 	grunt.registerTask("server",
 		[
-			"build"
-			//"open:chrome",
-			//"watch"
+			"build",
+			"connect",
+			"open:chrome",
+			"watch"
 		]);
 
 	grunt.registerTask("build",
 		[
 			"clean:all",
 			"copy",
-			"sass",
-			"htmlmin",
-			"uglify"
+			"sass"
+			//"htmlmin"
+			//"uglify"
 		]);
 
 	grunt.registerTask("default",
@@ -37,13 +38,32 @@ module.exports = function (grunt)
 			{
 				chrome:
 				{
-					path: "http://localhost",
+					path: "http://localhost:9000",
 					app: "Chrome"
 				},
 				firefox:
 				{
-					path: "http://localhost",
+					path: "http://localhost:9000",
 					app: "Firefox"
+				}
+			},
+			connect:
+			{
+				options:
+				{
+					port: 9000,
+					livereload: 35729,
+					hostname: '*'
+				},
+				livereload:
+				{
+					options:
+					{
+						base:
+							[
+								'<%= config.dist %>'
+							]
+					}
 				}
 			},
 			watch:
@@ -70,12 +90,12 @@ module.exports = function (grunt)
 				markup:
 				{
 					files: ["<%= config.src %>/**/*.html"],
-					tasks: ["newer:copy:markup", "newer:htmlmin"]
+					tasks: ["newer:copy:markup"]
 				},
 				scripts:
 				{
 					files: ["<%= config.src %>/**/*.js"],
-					tasks: ["newer:copy:scripts", "newer:uglify"]
+					tasks: ["newer:copy:scripts"]
 				}
 			},
 			htmlmin:
@@ -202,6 +222,18 @@ module.exports = function (grunt)
 								expand: true,
 								cwd: "<%= config.src %>",
 								src: "**/*.html",
+								dest: "<%= config.dist %>"
+							}
+						]
+				},
+				map:
+				{
+					files:
+						[
+							{
+								expand: true,
+								cwd: "<%= config.src %>",
+								src: "**/*.map",
 								dest: "<%= config.dist %>"
 							}
 						]

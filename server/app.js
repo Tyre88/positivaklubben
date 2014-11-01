@@ -1,10 +1,13 @@
 'use strict';
 
+var cors = require('cors');
 var express = require('express');
 var app = express();
 var tasks = require('./controllers/tasks');
 
+
 app.use(express.json());
+app.use(cors());
 
 app.post('/task', tasks.save);
 
