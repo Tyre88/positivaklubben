@@ -1,18 +1,25 @@
 'use strict';
 
-var redis = require('../lib/redis');
+var mongoose = require('../lib/mongoose');
+
+var taskSchema = mongoose.Schema({
+	id: String,
+	name: String,
+	description: String,
+	createdby: String,
+	due: String,
+	starttime: String,
+	endtime: String
+});
+
+var Task = mongoose.model('task', taskSchema);
 
 exports.getAll = function(callback)
 {
-	redis.lrange('tasks', 0, -1, function(err, data)
-	{
-		if(err)
-		{
-			return callback(err, null);
-		}
+};
 
-		callback(null, data.map(JSON.parse));
-	});
+exports.get = function(id, callback)
+{
 };
 
 exports.save = function(task, callback)
@@ -22,7 +29,8 @@ exports.save = function(task, callback)
 		return callback(null, null);
 	}
 
-	redis.lpush('tasks', JSON.stringify(task), function(err)
+	task = new Task(task);
+	task.save(function(err)
 	{
 		if(err)
 		{
@@ -37,12 +45,4 @@ exports.signup = function(taskSignup, callback)
 	{
 		return callback(null, null);
 	}
-
-	redis.lpush('taskSignups', JSON.stringify(taskSignup), function(err)
-	{
-		if(err)
-		{
-			return callback(err, null);
-		}
-	});
 };
