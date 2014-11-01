@@ -3,13 +3,18 @@
 var mongoose = require('../lib/mongoose');
 
 var taskSchema = mongoose.Schema({
-	id: String,
 	name: String,
 	description: String,
 	createdby: String,
+	createddate: {type: Date, default: Date.now},
 	due: String,
-	starttime: String,
-	endtime: String
+	starttime: {type: String, index: true},
+	endtime: {type: String, index: true},
+	comments: [{
+				content: String,
+				createdby: String,
+				date: {type: Date, defaults: Date.now}
+			   }]
 });
 
 var Task = mongoose.model('tasks', taskSchema);
